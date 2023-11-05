@@ -17,22 +17,21 @@ from test import *
 
 if __name__ == "__main__":
     classes_path = 'dataset/cls_classes.txt' 
-    input_shape = [32, 32]
+    input_shape = [200, 200]
     pretrained = False
     model_path = ""
-    epoch = 20
+    epoch = 100
     lr = 0.001
     momentum = 0.9
     weight_decay = 5e-4
     batch_size = 32
-    save_period = epoch // 10
+    save_period = epoch // 5
     logs_dir = 'logs'
     checkpoints_dir = "checkpoints"
     train_annotation_path = "images/cls_train.txt"
     val_annotation_path = "images/cls_val.txt"
     test_annotation_path = "images/cls_test.txt"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    device = "cpu"
     dp = False
 
     time_now = time.localtime()

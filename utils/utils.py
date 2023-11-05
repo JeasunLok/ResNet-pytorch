@@ -110,7 +110,7 @@ def transform(IsResize,Resize_size,IsTotensor,IsNormalize,Norm_mean,Norm_std,IsR
     return transforms.Compose(transforms_order)
 
 
-def get_transform(size=[32, 32], mean=[0, 0, 0], std=[1, 1, 1], IsResize=False, IsCentercrop=False, IsRandomCrop=False, IsRandomResizedCrop=False, IsTotensor=True, IsNormalize=True, IsRandomGrayscale=False, IsColorJitter=False, IsRandomVerticalFlip=False, IsRandomHorizontalFlip=False, IsRandomRotation=True):
+def get_transform(size=[200, 200], mean=[0, 0, 0], std=[1, 1, 1], IsResize=True, IsCentercrop=False, IsRandomCrop=False, IsRandomResizedCrop=False, IsTotensor=True, IsNormalize=True, IsRandomGrayscale=False, IsColorJitter=False, IsRandomVerticalFlip=False, IsRandomHorizontalFlip=False, IsRandomRotation=True):
   return transform(
       IsResize=IsResize, #是否缩放图像
       Resize_size=size, #缩放后的图像大小 如（512,512）->（256,192）
