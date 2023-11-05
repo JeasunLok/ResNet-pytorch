@@ -19,8 +19,9 @@ classes_path    = 'dataset/cls_classes.txt'
 #-------------------------------------------------------#
 datasets_path   = 'images'
 
-sets            = ["train", "test", "val"]
+sets            = ["train", "val", "test"]
 classes, _      = get_classes(classes_path)
+print(classes)
 
 if __name__ == "__main__":
     for se in sets:
@@ -37,7 +38,7 @@ if __name__ == "__main__":
             photos_name = os.listdir(photos_path)
             for photo_name in photos_name:
                 _, postfix = os.path.splitext(photo_name)
-                if postfix not in ['.jpg', '.png', '.jpeg', 'tif']:
+                if postfix not in ['.jpg', '.png', '.jpeg', '.tif']:
                     continue
                 list_file.write(str(cls_id) + ";" + '%s'%(os.path.join(photos_path, photo_name)))
                 list_file.write('\n')
