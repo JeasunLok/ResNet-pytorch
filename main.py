@@ -16,11 +16,13 @@ from train import *
 from test import *
 
 if __name__ == "__main__":
-    classes_path = 'dataset/cls_classes.txt' 
+    classes_path = 'dataset/cls_classes.txt'
+    cuda = False
+    dp = False
     input_shape = [200, 200]
     pretrained = False
     model_path = ""
-    epoch = 100
+    epoch = 30
     lr = 0.001
     momentum = 0.9
     weight_decay = 5e-4
@@ -31,8 +33,11 @@ if __name__ == "__main__":
     train_annotation_path = "images/cls_train.txt"
     val_annotation_path = "images/cls_val.txt"
     test_annotation_path = "images/cls_test.txt"
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    dp = False
+
+    if cuda:
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    else:
+        device = "cpu"
 
     time_now = time.localtime()
     logs_folder = os.path.join(logs_dir, time.strftime("%Y-%m-%d-%H-%M-%S", time_now))
@@ -60,7 +65,7 @@ if __name__ == "__main__":
         print("DP model initialized!")
         print("===============================================================================")
     
-    model = model.to(device).train()
+    model = model.to(device)
         
     #---------------------------#
     #   读取数据集对应的txt
@@ -99,6 +104,7 @@ if __name__ == "__main__":
     print("start training")
     epoch_result = np.zeros([4, epoch])
     for e in range(epoch):
+        model.train()
         train_acc1, train_acc3, train_loss = train_epoch(model, train_loader, criterion, optimizer, e, epoch, device)
         scheduler.step()
         print("Epoch: {:03d} | train_loss: {:.4f} | train_acc1: {:.2f}% | train_acc3: {:.2f}%".format(e+1, train_loss, train_acc1, train_acc3))
@@ -106,8 +112,8 @@ if __name__ == "__main__":
 
         if ((e+1) % save_period == 0) | (e == epoch - 1):
             print("===============================================================================")
-            print("start validating")      
-            model.eval()
+            print("start validating")
+            model.eval()      
             val_acc1, val_acc3, val_loss, val_prediction, val_label = valid_epoch(model, val_loader, criterion, device)
             val_CM, val_weighted_recall, val_weighted_precision, val_weighted_f1 = output_metrics(val_label, val_prediction)
             if (e != epoch -1):
