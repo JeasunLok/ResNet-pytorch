@@ -66,53 +66,45 @@ def transform(IsResize,Resize_size,IsTotensor,IsNormalize,Norm_mean,Norm_std,IsR
               IsRandomResizedCrop,RandomResizedCrop_size,Grayscale_rate,IsRandomHorizontalFlip,HorizontalFlip_rate,
               IsRandomVerticalFlip,VerticalFlip_rate,IsRandomRotation,degrees):
 
-  Resize_transform = []
-  Rotation=[]
-  Color=[]
-  Tensor=[]
-  Normalize=[]
+  transform_list = []
 
     #-----------------------------------------------<旋转图像>-----------------------------------------------------------#
   if IsRandomRotation:
-    Rotation.append(transforms.RandomRotation(degrees))
+    transform_list.append(transforms.RandomRotation(degrees))
   if IsRandomHorizontalFlip:
-    Rotation.append(transforms.RandomHorizontalFlip(HorizontalFlip_rate))
+    transform_list.append(transforms.RandomHorizontalFlip(HorizontalFlip_rate))
   if IsRandomVerticalFlip:
-    Rotation.append(transforms.RandomHorizontalFlip(VerticalFlip_rate))
+    transform_list.append(transforms.RandomHorizontalFlip(VerticalFlip_rate))
 
     #-----------------------------------------------<图像颜色>-----------------------------------------------------------#
   if IsColorJitter:
-    Color.append(transforms.ColorJitter(brightness,contrast,saturation,hue))
+    transform_list.append(transforms.ColorJitter(brightness,contrast,saturation,hue))
   if IsRandomGrayscale:
-    Color.append(transforms.RandomGrayscale(Grayscale_rate))
+    transform_list.append(transforms.RandomGrayscale(Grayscale_rate))
 
     #---------------------------------------------<缩放或者裁剪>----------------------------------------------------------#
   if IsResize:
-    Resize_transform.append(transforms.Resize(Resize_size))
+    transform_list.append(transforms.Resize(Resize_size))
   if IsCentercrop:
-    Resize_transform.append(transforms.CenterCrop(Centercrop_size))
+    transform_list.append(transforms.CenterCrop(Centercrop_size))
   if IsRandomCrop:
-    Resize_transform.append(transforms.RandomCrop(RandomCrop_size))
+    transform_list.append(transforms.RandomCrop(RandomCrop_size))
   if IsRandomResizedCrop:
-    Resize_transform.append(transforms.RandomResizedCrop(RandomResizedCrop_size))
-  if (IsResize+IsCentercrop+IsRandomCrop+IsRandomResizedCrop) >= 2:
-    print("warnings: over 2 methods have been used!")
+    transform_list.append(transforms.RandomResizedCrop(RandomResizedCrop_size))
 
     #---------------------------------------------<tensor化和归一化>------------------------------------------------------#
-    if IsTotensor:
-        Tensor.append(transforms.ToTensor())
-    if IsNormalize and len(Color)==0:
-        Normalize.append(transforms.Normalize(Norm_mean,Norm_std))
-    else:
-        Normalize.append(transforms.Normalize(Norm_mean,Norm_std))
+  if IsTotensor:
+    transform_list.append(transforms.ToTensor())
+  if IsNormalize:
+    transform_list.append(transforms.Normalize(Norm_mean,Norm_std))
 
     # 您可以更改数据增强的顺序，但是数据增强的顺序可能会影响最终数据的质量，因此除非您十分明白您在做什么,否则,请保持默认顺序
-    transforms_order=[Resize_transform,Rotation,Color,Tensor,Normalize]
-    return transforms.Compose(transforms_order)
+  # transforms_order=[Resize_transform,Rotation,Color,Tensor,Normalize]
+  return transforms.Compose(transform_list)
 
 
-def get_transform(size=[200, 200], mean=[0, 0, 0], std=[1, 1, 1], IsResize=True, IsCentercrop=False, IsRandomCrop=False, IsRandomResizedCrop=False, IsTotensor=True, IsNormalize=True, IsRandomGrayscale=False, IsColorJitter=False, IsRandomVerticalFlip=False, IsRandomHorizontalFlip=False, IsRandomRotation=True):
-  return transform(
+def get_transform(size=[200, 200], mean=[0, 0, 0], std=[1, 1, 1], IsResize=False, IsCentercrop=False, IsRandomCrop=False, IsRandomResizedCrop=False, IsTotensor=False, IsNormalize=False, IsRandomGrayscale=False, IsColorJitter=False, IsRandomVerticalFlip=False, IsRandomHorizontalFlip=False, IsRandomRotation=False):
+  diy_transform = transform(
       IsResize=IsResize, #是否缩放图像
       Resize_size=size, #缩放后的图像大小 如（512,512）->（256,192）
       IsCentercrop=IsCentercrop,#是否进行中心裁剪
@@ -139,4 +131,4 @@ def get_transform(size=[200, 200], mean=[0, 0, 0], std=[1, 1, 1], IsResize=True,
       IsRandomRotation=IsRandomRotation,#是是随机旋转图像
       degrees=10,#每个图像被旋转角度的范围 如degrees=10 则图像将随机旋转一个(-10,10)之间的角度
   )
- 
+  return diy_transform
