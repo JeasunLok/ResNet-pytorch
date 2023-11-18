@@ -89,7 +89,7 @@ if __name__ == "__main__":
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=epoch//10, gamma=0.9) 
     criterion = nn.CrossEntropyLoss().cuda()
 
-    image_transform = get_transform(input_shape)
+    image_transform = get_transform(input_shape, IsTotensor=True, IsRandomRotation=True)
     train_dataset = MyDataset(train_lines, input_shape=input_shape, transform=image_transform)
     val_dataset = MyDataset(val_lines, input_shape=input_shape)
     test_dataset = MyDataset(test_lines, input_shape=input_shape)

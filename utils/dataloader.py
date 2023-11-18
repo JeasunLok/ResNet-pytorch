@@ -1,4 +1,4 @@
-import cv2
+from PIL import Image
 import numpy as np
 import torch
 import torch.utils.data as data
@@ -15,11 +15,13 @@ class MyDataset(data.Dataset):
 
     def __getitem__(self, index):
         annotation_path = self.annotation_lines[index].split(';')[1].split()[0]
-        image = cv2.imread(annotation_path)
-        image = np.transpose(image, [2, 0, 1])
+        image = Image.open(annotation_path)
+
         if self.transform is not None:
-            image = self.transform(image)  # 对图片进行某些变换
+            image = self.transform(image) 
         else:
-            image = torch.from_numpy(image)
+            image = torch.from_numpy(np.transpose(np.array(image), [2, 0 ,1]))
+
         label = int(self.annotation_lines[index].split(';')[0])
+        
         return image, label
