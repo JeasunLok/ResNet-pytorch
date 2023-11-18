@@ -81,7 +81,6 @@ if __name__ == "__main__":
     num_test = len(test_lines)
     np.random.seed(2023)
     np.random.shuffle(train_lines)
-    np.random.seed(None)
 
     print("device:", device, "num_train:", num_train, "num_val:", num_val, "num_test:", num_test)
     print("===============================================================================")
