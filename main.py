@@ -38,7 +38,7 @@ if __name__ == "__main__":
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     else:
         device = "cpu"
-
+    
     time_now = time.localtime()
     logs_folder = os.path.join(logs_dir, time.strftime("%Y-%m-%d-%H-%M-%S", time_now))
     checkpoints_folder = os.path.join(checkpoints_dir, time.strftime("%Y-%m-%d-%H-%M-%S", time_now))
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     num_train = len(train_lines)
     num_val = len(val_lines)
     num_test = len(test_lines)
-    np.random.seed(2023)
+    np.random.seed(3047)
     np.random.shuffle(train_lines)
 
     print("device:", device, "num_train:", num_train, "num_val:", num_val, "num_test:", num_test)
