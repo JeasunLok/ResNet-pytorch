@@ -18,7 +18,7 @@ Create the environment and install the requirements.
 git clone https://github.com/JeasunLok/ResNet-pytorch.git
 conda create -n resnet python=3.9
 conda activate resnet
-pip install -r requirements
+pip install -r requirements.txt
 ```
 If you want to use GPU, please check your CUDA version and download the proper version of [pytorch](https://pytorch.org/get-started/locally/). Use CUDA 12.1 as example:
 ```
