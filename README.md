@@ -9,7 +9,7 @@ This is a pytorch implementation of ResNet for image classification by [JeasunLo
 
 Besides, this is the repository of the <b>Section V.</b> of open course for "starting deep learning" of <b>IMARS, School of Geography and Planning, Sun Yat-Sen University</b>. For this open course, this repository aims at completing <b>scene classification of Remote Sensing images.</b>
 
-Here is the video of how to use this repository in Chinese.
+Here is the [video](https://www.bilibili.com/video/BV1Wu4y157vk?p=1&vd_source=37637236b9378fa05cf47dbdc81be5df) of how to use this repository in Chinese.
 ***
 
 ## Installation
