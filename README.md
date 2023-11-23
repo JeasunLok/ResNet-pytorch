@@ -1,5 +1,5 @@
 # ResNet Classification in Pytorch
-<b>[ResNet: Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)</b>
+<b>[ResNet](https://arxiv.org/abs/1512.03385): Deep Residual Learning for Image Recognition</b>
 
 ![](utils/ResNet.png)
 
