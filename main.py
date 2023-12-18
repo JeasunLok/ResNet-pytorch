@@ -22,12 +22,12 @@ if __name__ == "__main__":
     input_shape = [200, 200]
     pretrained = False
     model_path = ""
-    epoch = 30
+    epoch = 2
     lr = 0.001
     momentum = 0.9
     weight_decay = 5e-4
     batch_size = 32
-    save_period = epoch // 5
+    save_period = epoch // 2
     logs_dir = 'logs'
     checkpoints_dir = "checkpoints"
     train_annotation_path = "images/cls_train.txt"
@@ -86,13 +86,13 @@ if __name__ == "__main__":
     print("===============================================================================")
     
     optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=momentum, weight_decay=weight_decay)
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=epoch//10, gamma=0.9) 
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=epoch//2, gamma=0.9) 
     criterion = nn.CrossEntropyLoss().cuda()
 
-    image_transform = get_transform(input_shape, IsTotensor=True, IsRandomRotation=True)
+    image_transform = get_transform(input_shape, IsTotensor=True, IsRandomRotation=True) # set IsResize=True to make sure it works
     train_dataset = MyDataset(train_lines, input_shape=input_shape, transform=image_transform)
-    val_dataset = MyDataset(val_lines, input_shape=input_shape)
-    test_dataset = MyDataset(test_lines, input_shape=input_shape)
+    val_dataset = MyDataset(val_lines, input_shape=input_shape, transform=image_transform)
+    test_dataset = MyDataset(test_lines, input_shape=input_shape, transform=image_transform)
 
     train_loader = DataLoader(train_dataset, shuffle=True, batch_size=batch_size)
     val_loader = DataLoader(val_dataset, shuffle=False, batch_size=batch_size)
