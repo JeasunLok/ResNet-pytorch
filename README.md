@@ -20,7 +20,7 @@ conda create -n resnet python=3.9
 conda activate resnet
 pip install -r requirements.txt
 ```
-If you want to use GPU, please check your CUDA version and download the proper version of [pytorch](https://pytorch.org/get-started/locally/). Use CUDA 12.1 as example:
+If you want to use GPU in Windows, please check your CUDA version and download the proper version of [pytorch](https://pytorch.org/get-started/locally/). Use CUDA 12.1 as example:
 ```
 nvidia-smi
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
@@ -36,12 +36,12 @@ Please download the dataset SIRI-WHU in http://www.lmars.whu.edu.cn/prof_web/zho
 
 Then run the ```dataset_split.py``` file to split the dataset into train, validate and test set with a proper ratio (3 ratio can be set in the file). <b>You should change the parameter</b> ```input folder``` <b>With your dataset SIRI-WHU downloading path</b>.
 
-<b><font color='red'>Attention</font></b>: pond 0002.tif is wrong and please delete it or replace it with a corret image with shape (200, 200, 3) or you can change the set the parameter ```IsResize=True``` of <b>image_transform</b> in main.
+<b><font color='red'>Attention</font></b>: SIRI-WHU dataset ```pond 0002.tif``` is wrong and please delete it or replace it with a corret image with shape (200, 200, 3) or you can change the set the parameter ```IsResize=True``` of <b>image_transform</b> in main.
 ***
 
 ## How to use it
-1. When the dataset is perpared and split correctly, you should revise the file ```dataset/cls_classes.txt``` with all classes of the dataset (cifar-10 and SIRI-WHU are both provided).
-2. Place the ```train```, ```val``` and ```test``` folder with images under ```images``` folder.
+1. When the dataset is perpared and splitted correctly, you should revise the file ```dataset/cls_classes.txt``` with all classes of the dataset (cifar-10 and SIRI-WHU are both provided).
+2. Place the ```train```, ```val``` and ```test``` folders with images under ```images``` folder.
 3. Run the file of ```dataset_create.py``` to generate the train, validate and test list of your dataset under ```images``` folder. After that, you can see ```cls_train.txt```, ```cls_val.txt``` and ```cls_test.txt``` under ```images``` folder.
 4. Revise and define your settings in ```main.py```, all the settings can be revised in this file, including epoch, lr, batch size and so on. One thing should be noted that the ```input_shape``` parameter in main.py should be the same as the size of the images in the dataset.
 5. Run the file of ```main.py``` to train, validate and test your model.
